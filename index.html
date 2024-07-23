@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geolocation Logger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #log {
+            margin-top: 20px;
+        }
+        .log-entry {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Geolocation Logger</h1>
-    <p>Your location will be logged to the console every 10 seconds.</p>
+    <p>Your location will be logged to the console and displayed on this page every 10 seconds.</p>
+    <div id="log"></div>
 
     <script>
         if ("geolocation" in navigator) {
@@ -29,12 +41,22 @@
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
+                    const timestamp = new Date().toLocaleString();
                     console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                    displayLocation(latitude, longitude, timestamp);
                 },
                 (error) => {
                     console.error("Error obtaining location:", error);
                 }
             );
+        }
+
+        function displayLocation(latitude, longitude, timestamp) {
+            const logDiv = document.getElementById('log');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.textContent = `Time: ${timestamp}, Latitude: ${latitude}, Longitude: ${longitude}`;
+            logDiv.appendChild(logEntry);
         }
     </script>
 </body>
