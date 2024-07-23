@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation Logger</title>
+</head>
+<body>
+    <h1>Geolocation Logger</h1>
+    <p>Your location will be logged to the console every 10 seconds.</p>
+
+    <script>
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log("Geolocation permission granted.");
+                    logLocation();
+                    setInterval(logLocation, 10000); // Log location every 10 seconds
+                },
+                (error) => {
+                    console.error("Error obtaining geolocation permission:", error);
+                }
+            );
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+
+        function logLocation() {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                },
+                (error) => {
+                    console.error("Error obtaining location:", error);
+                }
+            );
+        }
+    </script>
+</body>
+</html>
